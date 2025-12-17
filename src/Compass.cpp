@@ -212,6 +212,13 @@ bool Compass::replaceClass(const std::string& id,
     auto oldClassIt = studentIt->classCodes.find(oldClassCode);
     if (oldClassIt == studentIt->classCodes.end()) return false;
 
+    // Validate old class and new class are different
+    if (oldClassCode == newClassCode) return false;
+
+    // Validate student does not already have new class
+    auto newClassForStudentIt = studentIt->classCodes.find(newClassCode);
+    if (newClassForStudentIt != studentIt->classCodes.end()) return false;
+
     // Replace class for student
     studentDirectory.replaceClass(id, oldClassCode, newClassCode);
     return true;
